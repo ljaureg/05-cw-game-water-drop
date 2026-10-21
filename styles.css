@@ -27,9 +27,11 @@ Fonts:
 body {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: 100vh;
-    background-color: #f0f0f0;
+    padding: clamp(16px, 4vh, 40px) 16px;
+    background-color: #fff9e6;
+    color: #222;
     font-family: Arial, sans-serif;
 }
 
@@ -37,62 +39,84 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: clamp(12px, 2vh, 20px);
+    width: min(800px, 100%);
+}
+
+.brand-logo {
+    display: block;
+    width: min(320px, 75vw);
+    height: auto;
 }
 
 .score-panel {
     display: flex;
-    justify-content: space-between;  /* Space between score and button */
+    justify-content: space-between;
     align-items: center;
-    width: 800px;
-    padding: 10px;
+    gap: 16px;
+    width: 100%;
+    padding: 12px 16px;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .timer {
     flex: 0 1 auto;
-    font-size: 24px;
+    font-size: clamp(18px, 3vw, 24px);
     font-weight: bold;
 }
 
 #game-container {
-    width: 800px;
-    height: 600px;
-    background-color: #e6f7ff;
-    border: 2px solid #333;
+    --fall-distance: clamp(320px, 65vh, 600px);
+    width: 100%;
+    height: var(--fall-distance);
+    background-color: #eaf6ff;
+    border: 2px solid #2e9df7;
     border-radius: 8px;
     position: relative;
     overflow: hidden;
 }
 
-
 #start-btn {
     padding: 8px 16px;
-    background-color: #4CAF50;
-    color: white;
+    background-color: #ffc907;
+    color: #222;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    font-weight: bold;
 }
 
 #start-btn:hover {
-    background-color: #45a049;
+    background-color: #e6b500;
+}
+
+#start-btn:focus-visible {
+    outline: 3px solid #2e9df7;
+    outline-offset: 3px;
 }
 
 .score {
-    flex: 0 1 auto;  /* Don't grow, can shrink, auto basis */
-    font-size: 24px;
+    flex: 0 1 auto;
+    font-size: clamp(18px, 3vw, 24px);
     font-weight: bold;
+}
+
+.game-result {
+    min-height: 1.2em;
+    color: #159a48;
+    font-size: clamp(20px, 4vw, 24px);
+    font-weight: bold;
+    text-align: center;
 }
 
 .water-drop {
     position: absolute;
     width: 60px;  /* increased from 40px */
     height: 60px; /* increased from 40px */
-    background-color: #0099ff;
+    background-color: #2e9df7;
     border-radius: 50%;
     animation: dropFall linear forwards;
     transform-origin: center;
@@ -111,17 +135,14 @@ body {
 }
 
 .game-title {
-    color: #131313;
-    font-size: 48px;
-    margin-top: 0;
-    margin-bottom: 5px;  /* reduced from 20px */
+    color: #222;
+    font-size: clamp(32px, 7vw, 48px);
     text-align: center;
 }
 
 .game-tagline {
     color: #666;
-    font-size: 18px;
-    margin-bottom: 20px;
+    font-size: clamp(16px, 3vw, 18px);
     text-align: center;
 }
 
@@ -130,16 +151,26 @@ body {
         transform: translateY(-20px);
     }
     to {
-        transform: translateY(600px);
+        transform: translateY(var(--fall-distance));
     }
 }
 
-@media (max-width: 850px) {
-    .game-wrapper, .score-panel, #game-container {
-        width: 95vw;
+@media (max-width: 480px) {
+    body {
+        padding: 16px 12px;
     }
-    
+
+    .score-panel {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 18px;
+    }
+
+    #start-btn {
+        flex-basis: 100%;
+    }
+
     #game-container {
-        height: 70vh;
+        --fall-distance: clamp(320px, 58vh, 600px);
     }
 }
